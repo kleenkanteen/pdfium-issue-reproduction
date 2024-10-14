@@ -5,10 +5,10 @@ import sharp from 'sharp';
 
 export async function POST(req: NextRequest) {
   const formData: FormData = await req.formData();
-  const uploadedFiles = formData.getAll('filepond');
-  const uploadedFile = uploadedFiles[1];
+  const uploadedFiles = await formData.getAll('filepond');
+  const uploadedFile = await uploadedFiles[1];
   // @ts-ignore
-  const fileBuffer = Buffer.from(await uploadedFile.arrayBuffer());
+  const fileBuffer = await Buffer.from(await uploadedFile.arrayBuffer());
   await fs.writeFile("test.pdf", fileBuffer);
 
   const library = await PDFiumLibrary.init();
